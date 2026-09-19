@@ -24,7 +24,7 @@
 |----------------------|------------------------------------------------------------|
 | **Status**           | INITIALIZED & ACTIVE (Branch `main`)                       |
 | **Repository**       | https://github.com/avaniagrofoods/omniva-platform.git      |
-| **Latest Commits**   | Phase 1 Foundation (`1c6df77`), Phase 2 Marketing (`3cc23b4`) |
+| **Latest Commits**   | Phase 1 Foundation (`1c6df77`), Phase 2 Marketing (`3cc23b4`), Phase 2 Gate Audit (`08d2fd8`) |
 
 ---
 

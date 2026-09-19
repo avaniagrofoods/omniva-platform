@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { PRICING_TIERS, PRICING_DISCLAIMER } from "@/lib/config/pricing";
 
 export default function PricingPage() {
   const [annual, setAnnual] = React.useState(true);
@@ -15,13 +16,18 @@ export default function PricingPage() {
     <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:py-24 space-y-24">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto">
-        <Badge variant="brand">Simple, Predictable Plans</Badge>
+        <Badge variant="brand">Predictable Plans</Badge>
         <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl dark:text-white">
           Transparent pricing that scales with your conversation volume
         </h1>
         <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
           No hidden fees or surprise message markups. Upgrade, downgrade, or cancel anytime with one click.
         </p>
+
+        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+          <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+          <span>{PRICING_DISCLAIMER}</span>
+        </div>
 
         {/* Monthly vs Annual Toggle */}
         <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-zinc-200 bg-zinc-100 p-1.5 dark:border-zinc-800 dark:bg-zinc-900">

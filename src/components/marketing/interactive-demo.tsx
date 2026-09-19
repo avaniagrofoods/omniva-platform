@@ -105,7 +105,7 @@ export function InteractiveDemo() {
         {/* Live Status indicator */}
         <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-          <span>Real-time Sync Active</span>
+          <span>Interactive Demonstration (Illustrative Workflows)</span>
         </div>
       </div>
 
@@ -124,14 +124,14 @@ export function InteractiveDemo() {
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-white">
-                      Rohan Agarwal
+                      Rohan Agarwal (Example Workflow)
                     </h4>
                     <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                      +91 98201 45678 • WhatsApp Verified
+                      +1 (555) 019-2834 • Illustrative Demo
                     </p>
                   </div>
                 </div>
-                <Badge variant="whatsapp">Official Meta API</Badge>
+                <Badge variant="whatsapp">WhatsApp Cloud API</Badge>
               </div>
 
               {/* Chat Thread */}
@@ -251,10 +251,10 @@ export function InteractiveDemo() {
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-white">
-                      @sneha_patil
+                      @brand_creator (Example Workflow)
                     </h4>
                     <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                      Replied to your Instagram Story • 42.1K Followers
+                      Replied to your Story • Illustrative Use Case
                     </p>
                   </div>
                 </div>
@@ -333,7 +333,7 @@ export function InteractiveDemo() {
                     </p>
                   </div>
                 </div>
-                <Badge variant="brand">Ultra-low 450ms Latency</Badge>
+                <Badge variant="brand">Real-Time Voice Pipeline</Badge>
               </div>
 
               {/* Live Call Simulator */}
@@ -400,11 +400,11 @@ export function InteractiveDemo() {
               {/* Call Capabilities Footer */}
               <div className="grid grid-cols-3 gap-2 border-t border-zinc-800 pt-3 text-center text-xs text-zinc-400">
                 <div>
-                  <span className="block font-bold text-white">450ms</span>
-                  <span>Audio Latency</span>
+                  <span className="block font-bold text-white">Streaming</span>
+                  <span>Audio Pipeline</span>
                 </div>
                 <div>
-                  <span className="block font-bold text-white">100+</span>
+                  <span className="block font-bold text-white">Multilingual</span>
                   <span>Dialects Supported</span>
                 </div>
                 <div>

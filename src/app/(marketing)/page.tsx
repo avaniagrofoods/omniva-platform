@@ -84,7 +84,7 @@ export default function MarketingHomePage() {
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-              Official Meta Cloud API Partner
+              Built on WhatsApp Cloud API
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -120,7 +120,7 @@ export default function MarketingHomePage() {
               </div>
               <CardTitle className="mt-4">WhatsApp Cloud API</CardTitle>
               <CardDescription>
-                Official Meta Cloud integration with green tick support, interactive catalogs, bulk broadcasts, and zero template delays.
+                Direct WhatsApp Cloud API integration with support for interactive catalogs, bulk broadcasts, and structured templates.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -178,7 +178,7 @@ export default function MarketingHomePage() {
               </div>
               <CardTitle className="mt-4">Autonomous Voice Agents</CardTitle>
               <CardDescription>
-                Human-sounding AI callers with 450ms audio latency. Handles phone inquiries, books appointments, and qualifies inbound leads.
+                Human-sounding AI callers with real-time streaming audio. Handles phone inquiries, books appointments, and qualifies inbound leads.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -292,43 +292,55 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      {/* ─── 4. STATS & SOCIAL PROOF ─────────────────────────────────────────── */}
+      {/* ─── 4. CAPABILITIES & ARCHITECTURE ─────────────────────────────────── */}
       <section className="border-y border-zinc-200/80 bg-zinc-50/50 py-16 dark:border-zinc-800/80 dark:bg-zinc-900/30">
         <div className="mx-auto max-w-7xl px-6 sm:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4 text-center">
             <div>
-              <div className="text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-5xl">
-                450ms
+              <div className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-4xl">
+                Real-Time
               </div>
               <p className="mt-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                Voice Audio Latency
+                AI Voice Streaming
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                Natural speech & interruption handling
               </p>
             </div>
 
             <div>
-              <div className="text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-5xl">
-                72%
+              <div className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-4xl">
+                Autonomous
               </div>
               <p className="mt-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                Tickets Auto-Resolved
+                Inquiry Automation
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                Automate repetitive queries with custom RAG
               </p>
             </div>
 
             <div>
-              <div className="text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-5xl">
-                10M+
+              <div className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-4xl">
+                Omnichannel
               </div>
               <p className="mt-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                Conversations Handled
+                Unified Messaging Hub
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                WhatsApp, Instagram, Voice & Web
               </p>
             </div>
 
             <div>
-              <div className="text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-5xl">
-                99.99%
+              <div className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 sm:text-4xl">
+                Multi-Tenant
               </div>
               <p className="mt-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                Guaranteed Uptime SLA
+                Production-Grade Core
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                Designed for high availability operations
               </p>
             </div>
           </div>
@@ -345,6 +357,9 @@ export default function MarketingHomePage() {
           <p className="mt-3 text-base text-zinc-600 dark:text-zinc-400">
             All plans include full WhatsApp Cloud API access, unified omnichannel inbox, and 14-day risk-free trial.
           </p>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1 text-xs font-medium text-amber-700 dark:text-amber-300">
+            <span>Initial pricing — subject to change during preview / early access</span>
+          </div>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -506,7 +521,7 @@ export default function MarketingHomePage() {
             <AccordionItem value="item-3">
               <AccordionTrigger>How fast is the AI Voice Agent?</AccordionTrigger>
               <AccordionContent>
-                Our real-time voice pipeline clocks at sub-450ms audio latency, making conversations feel completely natural and human-like with zero awkward pauses. It natively supports interruption handling and multiple languages.
+                Our real-time voice pipeline is engineered for low-latency streaming audio, making conversations feel natural and human-like with zero awkward pauses. It natively supports interruption handling and multiple languages.
               </AccordionContent>
             </AccordionItem>
 

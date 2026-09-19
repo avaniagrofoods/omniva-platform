@@ -85,7 +85,7 @@ export default function ContactPage() {
               <span>Looking for a fast rollout?</span>
             </div>
             <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Standard onboarding takes less than 24 hours. Connect your official Meta WhatsApp Business Manager with our guided verification assistant.
+              Standard onboarding takes less than 24 hours. Connect your WhatsApp Business Account with our guided onboarding assistant.
             </p>
           </div>
         </div>
@@ -99,10 +99,10 @@ export default function ContactPage() {
                   <CheckCircle2 className="h-10 w-10" />
                 </div>
                 <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
-                  Message received!
+                  Demo Request Received (Frontend Preview)
                 </h3>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md">
-                  Thank you for reaching out. A Senior Solutions Architect has been assigned to your inquiry and will reach out via email and WhatsApp shortly.
+                  Thank you for testing the OMNIVA demo form. In Phase 3, this form will connect directly to the automated CRM Lead capture pipeline, database persistence, and email notifications.
                 </p>
                 <Button onClick={() => setSubmitted(false)} variant="outline">
                   Submit another inquiry
@@ -111,6 +111,10 @@ export default function ContactPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
+                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-md border border-indigo-500/20 bg-indigo-50/50 px-2.5 py-1 text-[11px] font-medium text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-950/40 dark:text-indigo-300">
+                    <Sparkles className="h-3 w-3" />
+                    <span>Frontend Preview — Automated CRM wiring in Phase 3</span>
+                  </div>
                   <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
                     Book a Live Demo & Architecture Session
                   </h3>
@@ -124,14 +128,14 @@ export default function ContactPage() {
                     <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
                       Full Name *
                     </label>
-                    <Input placeholder="Sachin Shinde" required />
+                    <Input placeholder="Alex Morgan" required />
                   </div>
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
                       Work Email *
                     </label>
-                    <Input type="email" placeholder="sachin@company.com" required />
+                    <Input type="email" placeholder="alex@example.com" required />
                   </div>
                 </div>
 
@@ -147,7 +151,7 @@ export default function ContactPage() {
                     <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
                       Phone / WhatsApp Number
                     </label>
-                    <Input placeholder="+91 98200 00000" />
+                    <Input placeholder="+1 (555) 019-2834" />
                   </div>
                 </div>
 

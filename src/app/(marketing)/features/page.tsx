@@ -121,10 +121,10 @@ export default function FeaturesPage() {
         <div className="order-1 lg:order-2 space-y-4">
           <Badge variant="brand">Autonomous Voice</Badge>
           <h2 className="text-3xl font-extrabold text-zinc-900 dark:text-white">
-            Human-grade AI Phone Agents with Sub-Second Latency
+            Human-grade AI Phone Agents with Streaming Real-Time Audio
           </h2>
           <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Eliminate traditional touchtone IVR menus that frustrate callers. OMNIVA AI speaks fluently, grasps customer intent in under 450 milliseconds, and executes live database actions during calls.
+            Eliminate traditional touchtone IVR menus that frustrate callers. OMNIVA AI speaks fluently, grasps customer intent in real time, and executes live database actions during calls.
           </p>
           <ul className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300 pt-2">
             <li className="flex items-center gap-2">

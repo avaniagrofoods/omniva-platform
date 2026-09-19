@@ -27,7 +27,7 @@ export function Footer() {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
               <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                All Systems Operational (99.99% Uptime)
+                All Systems Operational (Production Ready)
               </span>
             </div>
 
@@ -35,7 +35,7 @@ export function Footer() {
             <div className="flex flex-wrap items-center gap-3 pt-4 text-xs font-medium text-zinc-500 dark:text-zinc-400">
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1 dark:border-zinc-800 dark:bg-zinc-900">
                 <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" />
-                Meta Official Tech Provider
+                WhatsApp Cloud API Ready
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1 dark:border-zinc-800 dark:bg-zinc-900">
                 <Lock className="h-3.5 w-3.5 text-emerald-500" />

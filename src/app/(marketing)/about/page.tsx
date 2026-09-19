@@ -36,20 +36,20 @@ export default function AboutPage() {
           <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             OMNIVA was founded to solve this problem permanently. We designed an event-driven engine combining real-time messaging, sub-second AI voice synthesis, and custom document RAG into a single, unified platform.
           </p>
-          <div className="pt-4 flex items-center gap-6">
+          <div className="pt-4 flex flex-wrap items-center gap-6">
             <div>
-              <span className="block text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">2,500+</span>
-              <span className="text-xs text-zinc-500 font-semibold">Active Businesses</span>
+              <span className="block text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">Omnichannel</span>
+              <span className="text-xs text-zinc-500 font-semibold">Unified Architecture</span>
             </div>
             <div className="h-8 w-px bg-zinc-200 dark:bg-zinc-800" />
             <div>
-              <span className="block text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">140+</span>
-              <span className="text-xs text-zinc-500 font-semibold">Countries Reached</span>
+              <span className="block text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">Real-Time</span>
+              <span className="text-xs text-zinc-500 font-semibold">Voice & Chat Pipeline</span>
             </div>
             <div className="h-8 w-px bg-zinc-200 dark:bg-zinc-800" />
             <div>
-              <span className="block text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">99.99%</span>
-              <span className="text-xs text-zinc-500 font-semibold">Reliability SLA</span>
+              <span className="block text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">Multi-Tenant</span>
+              <span className="text-xs text-zinc-500 font-semibold">Enterprise Isolation</span>
             </div>
           </div>
         </div>

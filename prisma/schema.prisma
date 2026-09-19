@@ -1,0 +1,495 @@
+// OMNIVA — Prisma Database Schema
+// Multi-tenant SaaS: WhatsApp, Instagram, Facebook, AI, Voice, CRM, Billing
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum UserRole {
+  OWNER
+  ADMIN
+  AGENT
+  VIEWER
+}
+
+enum PlanTier {
+  STARTER
+  PRO
+  ENTERPRISE
+}
+
+enum ChannelType {
+  WHATSAPP
+  INSTAGRAM
+  FACEBOOK
+  EMAIL
+  SMS
+  VOICE
+}
+
+enum ConversationStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  ARCHIVED
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+  STICKER
+  LOCATION
+  TEMPLATE
+  INTERACTIVE
+  SYSTEM
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  RUNNING
+  PAUSED
+  COMPLETED
+  FAILED
+}
+
+enum AutomationTrigger {
+  MESSAGE_RECEIVED
+  CONVERSATION_OPENED
+  CONVERSATION_RESOLVED
+  CONTACT_CREATED
+  TAG_ADDED
+  APPOINTMENT_BOOKED
+  CAMPAIGN_ENROLLED
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum CallDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum CallStatus {
+  INITIATED
+  RINGING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  BUSY
+  NO_ANSWER
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+}
+
+// ─── Core: Workspace (Tenant) ─────────────────────────────────────────────────
+
+model Workspace {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  logo        String?
+  timezone    String   @default("Asia/Kolkata")
+  language    String   @default("en")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  members         WorkspaceMember[]
+  channels        Channel[]
+  contacts        Contact[]
+  conversations   Conversation[]
+  campaigns       Campaign[]
+  automations     Automation[]
+  appointments    Appointment[]
+  knowledgeBases  KnowledgeBase[]
+  apiKeys         ApiKey[]
+  subscription    Subscription?
+  webhooks        Webhook[]
+  tags            Tag[]
+
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id          String    @id @default(cuid())
+  workspaceId String
+  userId      String
+  role        UserRole  @default(AGENT)
+  createdAt   DateTime  @default(now())
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@map("workspace_members")
+}
+
+// ─── Auth: User ───────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts        Account[]
+  sessions        Session[]
+  memberships     WorkspaceMember[]
+  assignedConversations Conversation[] @relation("AssignedAgent")
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── Channels ─────────────────────────────────────────────────────────────────
+
+model Channel {
+  id          String      @id @default(cuid())
+  workspaceId String
+  type        ChannelType
+  name        String
+  isActive    Boolean     @default(true)
+  config      Json        // Stores channel-specific config (tokens, IDs, etc.) encrypted
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  workspace     Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+
+  @@map("channels")
+}
+
+// ─── CRM: Contacts ────────────────────────────────────────────────────────────
+
+model Contact {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String?
+  phone       String?
+  email       String?
+  avatar      String?
+  notes       String?
+  metadata    Json?    // Extra fields from channel (profile pic, language, etc.)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace     Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+  tags          ContactTag[]
+  appointments  Appointment[]
+
+  @@unique([workspaceId, phone])
+  @@map("contacts")
+}
+
+model Tag {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String
+  color       String   @default("#6366f1")
+  createdAt   DateTime @default(now())
+
+  workspace Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  contacts  ContactTag[]
+
+  @@unique([workspaceId, name])
+  @@map("tags")
+}
+
+model ContactTag {
+  contactId String
+  tagId     String
+
+  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([contactId, tagId])
+  @@map("contact_tags")
+}
+
+// ─── Conversations & Messages ─────────────────────────────────────────────────
+
+model Conversation {
+  id          String             @id @default(cuid())
+  workspaceId String
+  channelId   String
+  contactId   String
+  assignedTo  String?
+  status      ConversationStatus @default(OPEN)
+  lastMessageAt DateTime?
+  isAiEnabled Boolean            @default(false)
+  metadata    Json?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  channel   Channel   @relation(fields: [channelId], references: [id])
+  contact   Contact   @relation(fields: [contactId], references: [id])
+  agent     User?     @relation("AssignedAgent", fields: [assignedTo], references: [id])
+  messages  Message[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id             String           @id @default(cuid())
+  conversationId String
+  type           MessageType      @default(TEXT)
+  direction      MessageDirection
+  content        String?
+  mediaUrl       String?
+  mediaType      String?
+  externalId     String?          // ID from WhatsApp/Instagram/Facebook
+  isRead         Boolean          @default(false)
+  isAiGenerated  Boolean          @default(false)
+  metadata       Json?
+  createdAt      DateTime         @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+// ─── AI: Knowledge Base ───────────────────────────────────────────────────────
+
+model KnowledgeBase {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  documents KbDocument[]
+
+  @@map("knowledge_bases")
+}
+
+model KbDocument {
+  id              String        @id @default(cuid())
+  knowledgeBaseId String
+  title           String
+  content         String
+  sourceUrl       String?
+  embedding       Float[]       // Vector embedding for semantic search
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  knowledgeBase KnowledgeBase @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+
+  @@map("kb_documents")
+}
+
+// ─── Campaigns ────────────────────────────────────────────────────────────────
+
+model Campaign {
+  id          String         @id @default(cuid())
+  workspaceId String
+  name        String
+  channelType ChannelType
+  status      CampaignStatus @default(DRAFT)
+  message     Json           // Template / message content
+  scheduledAt DateTime?
+  sentAt      DateTime?
+  totalCount  Int            @default(0)
+  sentCount   Int            @default(0)
+  deliveredCount Int         @default(0)
+  readCount   Int            @default(0)
+  failedCount Int            @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("campaigns")
+}
+
+// ─── Automation ───────────────────────────────────────────────────────────────
+
+model Automation {
+  id          String            @id @default(cuid())
+  workspaceId String
+  name        String
+  isActive    Boolean           @default(true)
+  trigger     AutomationTrigger
+  conditions  Json?             // Filter conditions
+  actions     Json              // Array of action steps
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("automations")
+}
+
+// ─── Voice / Calling ─────────────────────────────────────────────────────────
+
+model Call {
+  id          String        @id @default(cuid())
+  workspaceId String
+  contactId   String?
+  direction   CallDirection
+  status      CallStatus
+  from        String
+  to          String
+  duration    Int?          // seconds
+  recordingUrl String?
+  transcript  String?
+  externalId  String?       // Twilio Call SID
+  startedAt   DateTime?
+  endedAt     DateTime?
+  createdAt   DateTime      @default(now())
+
+  @@map("calls")
+}
+
+// ─── Appointments ─────────────────────────────────────────────────────────────
+
+model Appointment {
+  id          String            @id @default(cuid())
+  workspaceId String
+  contactId   String
+  title       String
+  description String?
+  status      AppointmentStatus @default(SCHEDULED)
+  startAt     DateTime
+  endAt       DateTime
+  location    String?
+  meetingUrl  String?
+  reminderSentAt DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  contact   Contact   @relation(fields: [contactId], references: [id])
+
+  @@map("appointments")
+}
+
+// ─── Billing / Subscriptions ──────────────────────────────────────────────────
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  workspaceId          String             @unique
+  plan                 PlanTier           @default(STARTER)
+  status               SubscriptionStatus @default(TRIALING)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  stripePriceId        String?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  trialEndsAt          DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+// ─── Developer API Keys ───────────────────────────────────────────────────────
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  workspaceId String
+  name        String
+  keyHash     String    @unique  // Store hashed, never plaintext
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("api_keys")
+}
+
+// ─── Webhooks ─────────────────────────────────────────────────────────────────
+
+model Webhook {
+  id          String   @id @default(cuid())
+  workspaceId String
+  url         String
+  secret      String
+  events      String[] // e.g. ["message.received", "conversation.resolved"]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("webhooks")
+}
